@@ -1,0 +1,23 @@
+{
+  "run_id": null,
+  "status": "NOT_RUN",
+  "question_or_hypothesis": null,
+  "baseline_id": null,
+  "controlled_change": null,
+  "code_commit_or_snapshot": null,
+  "working_tree_dirty": null,
+  "config_resolved_path": null,
+  "data_version": null,
+  "split_version": null,
+  "init_checkpoint_path_or_hash": null,
+  "seeds": [],
+  "environment_id": null,
+  "hardware": null,
+  "run_command": null,
+  "artifact_paths": [],
+  "evaluation_protocol": null,
+  "metrics": null,
+  "verification_status": "NOT_RUN",
+  "known_deviations": [],
+  "unresolved_risks": []
+}
