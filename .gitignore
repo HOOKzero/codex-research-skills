@@ -1,0 +1,13 @@
+# Keep the Skill repository lightweight.
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+.env
+.skill-backups/
+logs/
+outputs/
+checkpoints/
+*.ckpt
+*.pth
+*.pt
