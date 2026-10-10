@@ -1,0 +1,10 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "codex-research-skills",
+  "version": "0.1.0",
+  "description": "Research coding, paper reproduction, and token-efficient Codex workflows.",
+  "author": {
+    "name": "HOOKzero"
+  },
+  "repository": "https://github.com/HOOKzero/codex-research-skills"
+}
