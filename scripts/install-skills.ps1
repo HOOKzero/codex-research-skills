@@ -8,7 +8,7 @@ param(
     [ValidateSet('Agents', 'LegacyCodex')]
     [string]$Layout = 'Agents',
 
-    [string[]]$SkillNames = @('token-efficient-coding', 'research-coding', 'paper-reproduction'),
+    [string[]]$SkillNames = @('token-efficient-coding', 'research-coding', 'paper-reproduction', 'windows-desktop-ui'),
 
     [switch]$Backup,
     [switch]$Force
