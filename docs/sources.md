@@ -1,25 +1,34 @@
 # Research sources and attribution
 
-检索时间：2026-10-10。本文记录**设计思路来源**，非第三方文件拷贝或保证。实际引用/再分发第三方 Skill 前，请检查仓库和单项内容许可证（有些仓库整体软件与 Skill 内容许可不同）。
+Review date: 2026-10-30. This file records upstream research for original synthesis. No third-party Skill or source tree is vendored by this repository. Repository license metadata is not always sufficient to establish the license of every bundled asset; review file-level notices before copying code, text, icons, fonts, datasets or token snapshots.
 
-| 参考来源 | 查看原始 `SKILL.md` | 借鉴（重新归纳） | 适用组件 |
-| --- | --- | --- | --- |
-| OpenAI `skill-creator` | https://github.com/openai/skills/blob/main/skills/.system/skill-creator/SKILL.md | Concise is Key、渐进加载、按需 references | 全部 |
-| Context optimization | https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/main/skills/context-optimization/SKILL.md | 缩减工具输出、只取高信号上下文、会话分区/压缩思想 | token-efficient-coding |
-| K-Dense Experimental Design | https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/skills/experimental-design/SKILL.md | 随机性、对照、独立重复、混杂因素 | research-coding |
-| K-Dense GPU Optimization | https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/skills/optimize-for-gpu/SKILL.md | 性能优化前 profiling、保留数值契约 | research-coding 参考 |
-| K-Dense Scientific Critical Thinking | https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/skills/scientific-critical-thinking/SKILL.md | 证据与结论范围、混杂与统计有效性 | research-coding |
-| RSE Reproducibility | https://github.com/fdiblen/rseng-agent-skills/blob/main/skills/rseng-reproducibility/SKILL.md | 代码/数据/环境可复现、随机种子与一键复现思路 | research-coding |
-| RSE Provenance | https://github.com/fdiblen/rseng-agent-skills/blob/main/skills/rseng-provenance/SKILL.md | run 级 provenance、artifact 相邻 manifest | research-coding |
-| ML Training Recipes | https://github.com/Orchestra-Research/AI-Research-SKILLs/blob/main/10-optimization/ml-training-recipes/SKILL.md | 深度学习数值诊断、GPU 资源、分层验证 | research-coding |
-| Evidence-Grounded ML Planner | https://github.com/HopperHou/evidence-grounded-ml-experiment-planner/blob/main/SKILL.md | 区分 observation/hypothesis/evidence/claim，限制昂贵实验 | research-coding |
-| Reproducing Papers | https://github.com/LYHrmer/reproducing-papers-skill/blob/main/SKILL.md | 精确提取论文机制、定位具体 call site/不变量 | paper-reproduction |
-| Paper Reproduction Workflow | https://github.com/Yang-goat/research-reproduction-skills/blob/main/paper-reproduction-workflow/SKILL.md | 提取→冻结协议→执行→验证→独立审计的关口 | paper-reproduction |
-| Experiment Verifier | https://github.com/Yang-goat/research-reproduction-skills/blob/main/experiment-verifier/SKILL.md | 原始结果独立指标复核，与科研结论解耦 | paper-reproduction |
-| Reproduction Auditor | https://github.com/Yang-goat/research-reproduction-skills/blob/main/reproduction-auditor/SKILL.md | 审计独立性、范围限定、不可用 PASS 代替 scientific validity | paper-reproduction |
-| Paper2Code | https://github.com/SCUTxyx/paper2code/blob/main/SKILL.md | 公式到代码映射、性质/梯度测试、诚实差距清单 | paper-reproduction |
-| Codex academic suite | https://github.com/Imbad0202/academic-research-skills-codex/blob/main/skills/academic-research-suite/SKILL.md | 单入口路由、大量子工作流按需加载 | 架构参考 |
+## Existing research Skills
 
-**拒绝照搬的行为：** 不采用无授权自动持续训练、不预加载几十 KB 的总纲、不强加特定实验平台、不开新 GPU 实验填补证据空缺、不过度承诺复现或 SOTA。
+| Source | Use in this repository | License handling |
+|---|---|---|
+| OpenAI skill-creator | Concise instructions and progressive reference loading | Design inspiration; no bulk text copied |
+| Context optimization, K-Dense, RSE and ML research Skills | Context efficiency, experiment integrity, provenance and reproducibility | Independently summarized; verify source-specific terms before reuse |
 
-这些文件为对公开工作流的**原创综合**，不是对原作的翻译或派生拷贝。若以后你从上游直接复制部分 `SKILL.md`/脚本，请分别遵守对应授权（例如 `rseng-agent-skills` 的 Skill 内容可能采用 CC BY 4.0）；在本仓库另建明确来源和许可记录。
+## Windows desktop UI Skill sources
+
+| Upstream project | What was reviewed / learned | License and status observed 2026-10-30 | Decision |
+|---|---|---|---|
+| [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Main UI/UX Skill, design-system workflow, UX/accessibility priorities, stack-aware recommendations, searchable knowledge model | Repository metadata reports MIT; actively maintained, main branch updated 2026-10-26. Skill is a large data-backed design system with its own scripts/data | Adopt the principle of task-scoped design guidance and UX checklist; do not vendor its datasets, CLI or Skill text |
+| [PySide6 Fluent UI](https://github.com/ejacques11/pyside6-fluent-ui) | PySide6 Widgets mapping, semantic Fluent tokens, theme/QSS architecture, native title-bar concerns, runtime validation | MIT; upstream README/CHANGELOG identifies 0.7.0-rc.1 (2026-07-15) as a public release candidate. Windows 11/Python 3.11/PySide6 6.10.1 validation stated upstream; several platform checks remain open | Use as a focused technical reference, not a production dependency or copied template. Explicitly treat RC status and platform limits as upstream claims |
+| [Microsoft Win Dev Skills](https://github.com/microsoft/win-dev-skills) | Current Windows development plugin catalog and WinUI 3 / Windows App SDK workflow; current catalog delegates WinUI implementation to microsoft/winappCli | MIT for repository; THIRD_PARTY_NOTICES separates external tools. README/CHANGELOG updated 2026-10-26; current catalog lists winui as maintained in microsoft/winappCli | Use official Microsoft docs and current WinApp CLI guidance for version-specific details. Do not copy plugin assets or assume the catalog still contains WinUI source |
+| [Qt AI Skills](https://github.com/TheQtCompanyRnD/agent-skills) | Qt/QML UI design, review and testing practices; platform-aware design context | GitHub license metadata returned NOASSERTION; LICENSE states LicenseRef-Qt-Commercial OR BSD-3-Clause. This is not treated as blanket permission for copying Skill text | Consulted for concepts only. No copied text, code, tests or assets; licensing ambiguity excludes redistribution |
+| [Windows App Automation](https://github.com/youngjunning/windows-app-automation) | Observe → target → act → verify; stable UIA selectors; same-session/integrity constraints; PowerShell UIA testing | MIT; updated 2026-09-11 | Summarized verification principles. No script/helper copied; UIA requires an actual interactive Windows session |
+| [WPF Desktop Skill](https://github.com/j4flmao/agent-skills/tree/main/skills/desktop/wpf) | WPF/XAML/MVVM patterns and preservation of existing WPF projects | Repository MIT; source Skill declares MIT. Updated 2026-10-28 | Independently summarized WPF architecture and test concerns; no bulk text or code copied |
+
+## License and attribution policy
+
+- GitHub repository `license` metadata is a useful signal, not proof that every asset in a repository shares that license.
+- For MIT sources, substantial copied portions would require retaining the original copyright and permission notice. This Skill instead uses original summaries and does not redistribute their code or assets.
+- Qt AI Skills is excluded from copying because its declared dual license requires interpretation and GitHub reports NOASSERTION.
+- Microsoft product names are used descriptively. No Microsoft logo, proprietary artwork, fonts or icon assets are redistributed.
+- Frameworks, controls, icon packs, fonts, WebView2, Qt modules and packaging tools carry their own licenses. Check exact versions and distribution model before shipping.
+- This repository currently has no root LICENSE for its original Skill content. Do not imply that upstream MIT licenses automatically license this repository.
+
+## Maintenance
+
+Recheck upstream README, SKILL, LICENSE, release/changelog and commit history before importing any material or making version-specific claims. Distinguish stable releases from RC, preview and experimental features. Keep a date and source link for each material change.
