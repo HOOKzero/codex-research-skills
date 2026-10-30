@@ -1,14 +1,58 @@
-# Skill 行为验收（在 Codex 中手动运行）
+# Skill behavior acceptance tests
 
-验证分三层：**发现**（`/skills` 列表）→ **加载**（明确路径和 metadata version）→ **行为**（任务中的真实动作）。仅能说出版本号不代表实际改善效率或研究质量。
+Run manually in a Codex environment that can load the Skills. Record prompt, loaded Skill path/version, tool actions, actual command output and evidence. A correct plan alone does not prove runtime behavior.
 
-1. `$token-efficient-coding`：不修改项目，定位一个已知配置文件；期望先用已知路径或小范围搜索，不输出全仓清单。检查实际工具调用。
-2. `$token-efficient-coding`：在已有 checkpoint 项目里恢复任务；期望先读 checkpoint、核对 artifact 版本，仅不足时搜代码。
-3. `$research-coding`：请只设计一次医学图像分割 Dice 对比实验；期望指出患者级划分、baseline 冻结、初始化/预处理/指标/种子一致性，不运行训练。
-4. `$research-coding`：已有训练 loss NaN，要求定位根因；期望从首个非有限值、数据/loss/AMP 等证据检查，而非直接盲目调 LR 或启动大训练。
-5. `$research-coding`：请新增 prototype loss 但不要正式训练；期望可逆隔离、梯度/形状单测、状态为 `NOT_RUN` 或 `SMOKE_PASSED`，不生成真实 Dice。
-6. `$paper-reproduction`：给论文的 Method 部分与代码，先规划；期望固定具体版本、Equation→code map、ambiguity list，不从 abstract 猜实现。
-7. `$paper-reproduction`：仅 unit tests 通过就问“论文复现成功了吗？”；期望明确只具备机制级验证，尚缺完整数据/训练/协议核对。
-8. 联合使用 `$token-efficient-coding $research-coding`：对一个已冻结基线做消融；期望一边只读取必要仓库信息，一边保留全部对照/复现证据；不因 Token 优化而降低验证要求。
+## Existing research Skills
 
-**记录结果：** 保存 prompt、Skill 实际加载路径/版本、关键工具行为、是否未经许可写文件或开训练、是否夸大声明、可见上下文浪费。不能凭一轮示例声称节省了某个 Token 百分比。建议至少对单独 Skill 和双 Skill 使用进行测试。
+1. `$token-efficient-coding`: locate one known config file without broad repository dumps.
+2. `$token-efficient-coding`: resume from a checkpoint and verify artifact version before searching.
+3. `$research-coding`: design a patient-level medical segmentation Dice comparison without launching training.
+4. `$research-coding`: diagnose NaN from first non-finite evidence, not blind LR changes.
+5. `$paper-reproduction`: map equations to code and tests; do not claim paper-level reproduction from a smoke test.
+
+## Windows desktop UI — expected behavior
+
+### A. Python deep-learning image tool
+
+Prompt: "Create a Windows desktop image-processing tool using PyTorch and OpenCV. The GUI framework is not specified."
+
+Expected: inspect repository/runtime requirements; evaluate PySide6 + Qt Widgets first; keep inference and file I/O off the GUI thread; explain packaging/CUDA/plugin risks. Do not ask the user to choose a framework if repository evidence is sufficient.
+
+### B. New Windows-native management app
+
+Prompt: "Build a modern native Windows desktop management application. No framework specified."
+
+Expected: evaluate WinUI 3 + C# first, compare WPF if data-heavy controls/legacy needs justify it; do not default to Electron without a requirement.
+
+### C. Existing WPF project
+
+Prompt: "Modernize the UI of this existing WPF application."
+
+Expected: retain WPF and its bindings/MVVM/contracts; audit read-only first; no framework migration absent explicit evidence and approval.
+
+### D. Existing Tauri project
+
+Prompt: "Improve the desktop UI of this existing Tauri app."
+
+Expected: detect Tauri version/frontend/IPC and preserve architecture; do not migrate to Electron or add an unrelated native shell.
+
+### E. Full UI workflow
+
+Prompt: "Improve this desktop application's interface."
+
+Expected: perform Audit read-only; specify information architecture/tokens/states; implement bounded changes only after scope is authorized; run build, launch the real app, exercise controls and report evidence levels separately. If Windows runtime is unavailable, mark runtime/UIA/DPI tests NOT RUN.
+
+## Static repository acceptance
+
+- `scripts/check-skills.ps1` succeeds on Windows PowerShell 5.1 or PowerShell 7 (where available).
+- All Skill front matter starts/ends correctly; name equals directory; semantic version is present.
+- Every referenced local `references/` or `assets/` file exists.
+- windows-desktop-ui reports version 1.0.0.
+- `install-skills.ps1` default list includes windows-desktop-ui.
+- `link-global.ps1` discovers it automatically without special-case edits.
+- Existing Skill contents are unchanged by this feature branch.
+- No upstream Skill text/assets are copied wholesale.
+
+## Verification honesty
+
+Mark each check PASS / FAIL / NOT RUN with command and evidence. Static validation does not prove runtime; build does not prove UI interaction; screenshots of mockups do not prove application behavior. Do not invent test output.
